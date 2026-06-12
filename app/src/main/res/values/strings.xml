@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Bouzid</string>
+    <string name="app_subtitle">IPTV Player</string>
+    <string name="activate_title">Activate Your Device</string>
+    <string name="activate_message">Enter your email address to activate Bouzid on this device.</string>
+    <string name="email_hint">Email address</string>
+    <string name="activate_button">Activate</string>
+    <string name="activating">Activating…</string>
+    <string name="invalid_email">Please enter a valid email address</string>
+    <string name="activation_failed">Activation failed. Check your connection and try again.</string>
+    <string name="activation_success">Activation successful!</string>
+    <string name="checking_config">Checking configuration…</string>
+    <string name="no_channels">No channels found in playlist</string>
+    <string name="loading_channels">Loading channels…</string>
+    <string name="select_channel">Select a channel</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="url_input_title">Enter your IPTV playlist URL to get started</string>
+    <string name="url_label">M3U Playlist URL</string>
+    <string name="url_placeholder">http://example.com/get.php?…</string>
+    <string name="url_empty_error">Please enter your IPTV playlist URL</string>
+    <string name="continue_button">Continue</string>
+</resources>
