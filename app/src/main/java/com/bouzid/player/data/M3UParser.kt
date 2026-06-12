@@ -1,5 +1,7 @@
 package com.bouzid.player.data
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.BufferedReader
@@ -11,11 +13,11 @@ object M3UParser {
         .readTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
         .build()
 
-    suspend fun parse(url: String): List<Channel> {
+    suspend fun parse(url: String): List<Channel> = withContext(Dispatchers.IO) {
         val request = Request.Builder().url(url).build()
         val response = client.newCall(request).execute()
-        val body = response.body?.string() ?: return emptyList()
-        return parseM3U(body)
+        val body = response.body?.string() ?: return@withContext emptyList()
+        parseM3U(body)
     }
 
     private fun parseM3U(content: String): List<Channel> {

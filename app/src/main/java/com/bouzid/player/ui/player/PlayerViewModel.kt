@@ -5,10 +5,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.bouzid.player.data.Channel
 import com.bouzid.player.data.M3UParser
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 sealed class PlayerUiState {
     data object Loading : PlayerUiState()
@@ -27,10 +29,14 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
     val state: StateFlow<PlayerUiState> = _state.asStateFlow()
 
     fun loadChannels(m3uUrl: String) {
+        if (m3uUrl.isBlank()) {
+            _state.value = PlayerUiState.Error("No playlist URL configured")
+            return
+        }
         _state.value = PlayerUiState.Loading
         viewModelScope.launch {
             try {
-                val channels = M3UParser.parse(m3uUrl)
+                val channels = withContext(Dispatchers.IO) { M3UParser.parse(m3uUrl) }
                 if (channels.isEmpty()) {
                     _state.value = PlayerUiState.Error("No channels found in playlist")
                     return@launch
