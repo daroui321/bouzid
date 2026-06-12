@@ -247,6 +247,7 @@ private fun ChannelInfoOverlay(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ChannelsDrawer(
     viewModel: PlayerViewModel,
@@ -256,15 +257,16 @@ private fun ChannelsDrawer(
     val channels = viewModel.getFilteredChannels()
     val listState = rememberLazyListState()
 
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(0.4f)
-            .align(Alignment.BottomCenter),
-        shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
-        color = SurfaceDark,
-        shadowElevation = 16.dp
-    ) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.4f)
+                .align(Alignment.BottomCenter),
+            shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
+            color = SurfaceDark,
+            shadowElevation = 16.dp
+        ) {
         Column(modifier = Modifier.fillMaxSize()) {
             Row(
                 modifier = Modifier
@@ -343,6 +345,7 @@ private fun ChannelsDrawer(
                 }
             }
         }
+    }
     }
 }
 

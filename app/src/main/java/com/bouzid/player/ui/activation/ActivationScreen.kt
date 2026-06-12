@@ -185,7 +185,6 @@ private fun ActivationCard(
             Spacer(Modifier.height(24.dp))
             Button(
                 onClick = {
-                    focusManager.clearFocus()
                     onSubmit()
                 },
                 enabled = !isLoading && email.isNotBlank(),
