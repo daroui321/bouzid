@@ -6,10 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.bouzid.player.data.ActivationApi
 import com.bouzid.player.data.ActivationRequest
 import com.bouzid.player.data.PreferencesManager
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 sealed class ActivationState {
     data object Loading : ActivationState()
@@ -35,7 +37,9 @@ class ActivationViewModel(application: Application) : AndroidViewModel(applicati
     private fun checkActivation() {
         viewModelScope.launch {
             try {
-                val config = ActivationApi.service.getConfig()
+                val config = withContext(Dispatchers.IO) {
+                    ActivationApi.service.getConfig()
+                }
                 if (config.activation.enabled) {
                     _state.value = ActivationState.Ready(config.activation.message)
                 } else {
@@ -61,7 +65,9 @@ class ActivationViewModel(application: Application) : AndroidViewModel(applicati
         }
         viewModelScope.launch {
             try {
-                val response = ActivationApi.service.activate(ActivationRequest(email))
+                val response = withContext(Dispatchers.IO) {
+                    ActivationApi.service.activate(ActivationRequest(email))
+                }
                 if (response.success) {
                     prefsManager.setActivated(email)
                     _state.value = ActivationState.Success(email)
