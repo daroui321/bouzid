@@ -186,19 +186,13 @@ private fun PlayerOverlay(
     onToggleChannels: () -> Unit,
     onPlay: () -> Unit
 ) {
+    val bgBrush = if (isPlaying && playerError == null)
+        Brush.verticalGradient(listOf(Color.Black.copy(alpha = 0.6f), Color.Transparent, Color.Transparent, Color.Black.copy(alpha = 0.4f)))
+    else
+        Brush.solidColor(Color.Black.copy(alpha = 0.85f))
+
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                if (isPlaying && playerError == null) Brush.verticalGradient(
-                    colors = listOf(
-                        Color.Black.copy(alpha = 0.6f),
-                        Color.Transparent,
-                        Color.Transparent,
-                        Color.Black.copy(alpha = 0.4f)
-                    )
-                ) else Color.Black.copy(alpha = 0.85f)
-            )
+        modifier = Modifier.fillMaxSize().background(bgBrush)
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             Row(
